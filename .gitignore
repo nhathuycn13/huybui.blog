@@ -1,3 +1,6 @@
 /node_modules
 /vendor
 .env
+.idea/blade.xml
+.idea/workspace.xml
+npm-debug.log

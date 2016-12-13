@@ -1,0 +1,23 @@
+{
+  "vueProgress" : {
+                    "username" : "root",
+                    "password" : "foot"
+                  },
+  "vueTimeago" : {
+    "name": "timeago",
+    "locale": "vi-VI",
+    "locales": {
+      "vi-VI": [
+        "vừa mới đây luôn",
+        ["%s giây trước", "%s giây trước"],
+        ["%s phút trước", "%s phút trước"],
+        ["%s gìơ trước", "%s gìơ trước"],
+        ["%s ngày trước", "%s ngày trước"],
+        ["%s tuần trước", "%s tuần trước"],
+        ["%s tháng trước", "%s tháng trước"],
+        ["%s năm trước", "%s năm trước"]
+      ]
+
+    }
+  }
+}
