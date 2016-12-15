@@ -2,35 +2,35 @@
     <div>
         <section class="content">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Trạng thái</h3>
+                <!--<div class="col-md-3">-->
+                    <!--<div class="box box-primary">-->
+                        <!--<div class="box-header with-border">-->
+                            <!--<h3 class="box-title">Trạng thái</h3>-->
 
-                            <div class="box-tools">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-body no-padding">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li class="active"><a href="#"><i class="fa fa-inbox"></i> Tất cả
-                                    <span class="label label-primary pull-right">12</span></a></li>
-                                <li><a href="#"><i class="fa fa-envelope-o"></i> đang báo gía</a></li>
-                                <li><a href="#"><i class="fa fa-trash-o"></i> đã hủy <span class="label label-warning pull-right">65</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /. box -->
-                    <div>
-                        <router-link :to="{ name: 'add' }" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Thêm Mới</router-link>
-                    </div>
-                    <!-- /.box -->
-                </div>
+                            <!--<div class="box-tools">-->
+                                <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="box-body no-padding">-->
+                            <!--<ul class="nav nav-pills nav-stacked">-->
+                                <!--<li class="active"><a href="#"><i class="fa fa-inbox"></i> Tất cả-->
+                                    <!--<span class="label label-primary pull-right">12</span></a></li>-->
+                                <!--<li><a href="#"><i class="fa fa-envelope-o"></i> đang báo gía</a></li>-->
+                                <!--<li><a href="#"><i class="fa fa-trash-o"></i> đã hủy <span class="label label-warning pull-right">65</span></a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; /.box-body &ndash;&gt;-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /. box &ndash;&gt;-->
+                    <!--<div>-->
+                        <!--<router-link :to="{ name: 'add' }" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Thêm Mới</router-link>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.box &ndash;&gt;-->
+                <!--</div>-->
                 <!-- /.col -->
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Danh sách thể loại</h3>
@@ -122,6 +122,9 @@
                                 <!-- /.pull-right -->
                             </div>
                         </div>
+                        <div>
+                            <router-link :to="{ name: 'add' }" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Thêm Mới</router-link>
+                        </div>
                     </div>
                     <!-- /. box -->
                 </div>
@@ -170,7 +173,7 @@
                 this.$Progress.start();
                 this.$http.delete(this.$parent.apiUrl + '/' + id).then(function (response) {
                     if (response.body == '1'){
-                        this.$parent.notifySuccess('Xóa thành công! chúc mừng nhé, về khoe với mẹ đi.')
+                        this.$parent.notifySuccess('Xóa thành công!')
                         this.fetchData(1);
                         this.$Progress.finish();
                     }

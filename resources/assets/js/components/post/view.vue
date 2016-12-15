@@ -7,7 +7,7 @@
                 <div class="col-xs-12">
                     <h2 class="page-header">
                         <!---->
-                        Chi tiết thể loại #{{ getId(form.id) }}
+                        Chi tiết bài viết #{{ getId(form.id) }}
                         <div class="pull-right">
                             <i class="fa fa-globe"></i> Huybui.blog
                         </div>
@@ -22,16 +22,37 @@
                         <dt>Id</dt>
                         <dd>#{{ getId(form.id) }}</dd>
 
-                        <dt>Tên</dt>
-                        <dd>{{ form.name }}</dd>
+                        <dt>Tiêu đề</dt>
+                        <dd>{{ form.title }}</dd>
 
-                        <dt v-if="form.parent">Thể loại cha</dt>
-                        <dd v-if="form.parent">{{ form.parent.name }}</dd>
+                        <dt v-if="form.category">Thể loại</dt>
+                        <dd v-if="form.category">{{ form.category.name }}</dd>
+                        <dt>Giới thiệu</dt>
+                        <dd>{{ form.intro }}</dd>
 
-                        <dt>Tên</dt>
-                        <dd>{{ form.name }}</dd>
+                        <dt>Link</dt>
+                        <dd>{{ form.slug }}</dd>
 
+                        <dt>Tag</dt>
+                        <dd><span style="margin-right: 15px;" class="label label-success" v-for="tag in form.tags">{{ tag.name }}</span></dd>
                     </dl>
+                </div>
+                <div class="col-sm-4">
+                    <div class="dt-horizontal">
+                        <dt>Thời Gian Viết: </dt>
+                        <dd><timeago :title="form.created_at" :since="form.created_at" :auto-update="60"></timeago></dd>
+
+                        <dt>Cập nhật lần cuối</dt>
+                        <dd><timeago :title="form.updated_at" :since="form.updated_at" :auto-update="60"></timeago></dd>
+                    </div>
+                </div>
+                <div class="col-sm-4" v-if="form.thumbnail">
+                    <div>
+                        <img :src="form.thumbnail" class="img img-thumbnail"/>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="content" v-html="form.content"></div>
                 </div>
             </div>
             <!-- /.row -->

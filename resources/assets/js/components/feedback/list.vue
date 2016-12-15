@@ -24,16 +24,12 @@
                         <!--&lt;!&ndash; /.box-body &ndash;&gt;-->
                     <!--</div>-->
                     <!--&lt;!&ndash; /. box &ndash;&gt;-->
-                    <!--<div>-->
-                        <!--<router-link :to="{ name: 'add' }" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Thêm Mới</router-link>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash; /.box &ndash;&gt;-->
                 <!--</div>-->
                 <!-- /.col -->
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Danh sách bài viết</h3>
+                            <h3 class="box-title">Danh sách phản hồi</h3>
 
                             <form class="box-tools pull-right" @submit.prevent="search">
                                 <div class="has-feedback">
@@ -76,10 +72,8 @@
                                     <tr>
                                         <th></th>
                                         <th>#id</th>
-                                        <th>Tiêu đề</th>
-                                        <th>Thể loại</th>
-                                        <th>Người đăng</th>
-                                        <th>Tags</th>
+                                        <th>Tên</th>
+                                        <th>Email</th>
                                         <th class="pull-right"></th>
                                     </tr>
 
@@ -88,15 +82,10 @@
                                             <input @click="checkMe(item)" type="checkbox" :id="item.id">
                                         </td>
                                         <td><router-link :to="{ name:'view', params : { id : item.id} }">{{ getId(item.id) }}</router-link></td>
-                                        <td><router-link :to="{ name:'view', params : { id : item.id} }">{{ item.title }}</router-link></td>
-                                        <td><span v-if="item.category">{{ item.category.name }}</span></td>
-                                        <td><span v-if="item.user">{{ item.user.name }}</span></td>
-                                        <td>
-                                            <span v-for="tag in item.tags" class="label label-primary" style="margin-right:5px;">{{ tag.name }} </span>
-                                        </td>
+                                        <td><router-link :to="{ name:'view', params : { id : item.id} }">{{ item.name }}</router-link></td>
+                                        <td>{{ item.email }}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <router-link :to="{ name: 'update', params: { id : item.id} }"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></router-link>
                                                 <a href="#" type="button" @click.prevent="deleteItem(item.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             </div>
                                         </td>
@@ -207,7 +196,7 @@
                 if (this.keyword === '')
                     return;
                 this.$Progress.start();
-                this.$http.get('api/search/post/' + this.keyword).then(function (response) {
+                this.$http.get('api/search/category/' + this.keyword).then(function (response) {
                     this.data = response.body;
                     this.items = this.data.data,
                             this.$Progress.finish();

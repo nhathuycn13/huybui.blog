@@ -40,11 +40,17 @@ class PostEloquent implements PostRepo
         return $this->eloquent->with(['category', 'user', 'tags'])->paginate($perPage, $columns);
     }
 
-    public function update($id, $attributes)
+    public function update($id, Request $request)
     {
         $me = $this->eloquent->findOrFail($id);
 //        todoHuy: fix response below, hehe
-        return $me->update($attributes) ? $me->load(['category', 'user', 'tags']) : response('Error!');
+        $arr = [];
+        foreach ($request->tags as $tag) {
+            if (isset($tag['pivot'])) unset($tag['pivot']);
+            $arr[] = Tag::firstOrCreate($tag)->id;
+        }
+        $me->tags()->sync($arr);
+        return $me->update($request->toArray()) ? $me->load(['category', 'user', 'tags']) : response('Error!');
     }
     public function delete($id)
     {
@@ -64,6 +70,16 @@ class PostEloquent implements PostRepo
     public function findMe($id)
     {
         return $this->eloquent->with(['category', 'user', 'tags'])->findOrFail($id);
+    }
+
+    public function getPost()
+    {
+        return $this->eloquent->orderBy('created_at', 'desc')->with(['category', 'user', 'tags'])->paginate(10);
+    }
+
+    public function findBySlug($slug)
+    {
+        return $this->eloquent->where('slug', '=', $slug)->with(['category', 'user', 'tags'])->first();
     }
 
 }

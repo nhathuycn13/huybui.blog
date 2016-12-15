@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    Cập Nhật Thể Loại
+                    Cập Nhật Bài Viết
                     <div class="pull-right">
                         <i class="fa fa-globe"></i> Huybui.blog
                     </div>
@@ -14,38 +14,87 @@
         <div class="row">
             <div class="col-xs-12">
                 <form @submit.prevent="updateMe" class="form form-horizontal">
-                    <div class="form-group" :class="{'has-error': form.$errors.has('name')}">
-                        <label class="col-sm-2 control-label">Tên *</label>
+                    <div class="form-group" :class="{'has-error': form.$errors.has('title')}">
+                        <label class="col-sm-2 control-label">Tiêu đề *</label>
                         <div class="col-sm-8">
-                            <input v-model="form.$fields.name" class="form-control">
-                            <label v-if="form.$errors.has('name')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.name[0]}}</label>
+                            <input v-model="form.$fields.title" class="form-control">
+                            <label v-if="form.$errors.has('title')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.title[0]}}</label>
                         </div>
                     </div>
-
-                    <div class="form-group" :class="{'has-error': form.$errors.has('parent_id')}">
-                        <label class="col-sm-2 control-label">Thể loại cha</label>
+                    <div class="form-group" :class="{'has-error': form.$errors.has('category_id')}">
+                        <label class="col-sm-2 control-label">Thể loại</label>
                         <div class="col-sm-8">
-                            <multiselect :options="parentCategory"
-                                         :selected="selected"
+                            <multiselect :options="categories"
                                          :local-search="false"
                                          :clear-on-select="true"
                                          :close-on-select="true"
                                          :loading="isLoading"
-                                         v-model="form.$fields.parent_id"
+                                         v-model="form.$fields.category"
                                          @search-change="findCategory"
                                          track-by="id"
                                          label="name"
                                          selectedLabel="đã chọn"
-                                         placeholder="Nhập thể loại cha"
-                                         selectLabel="Nhấn enter để chọn"
-                                         deselectLabel = "Nhấn enter bỏ chọn"
+                                         placeholder="Nhập để tìm thể loại"
+                                         selectLabel="chọn"
+                                         deselectLabel = "bỏ chọn"
                                          @input="updateCategory">
-                                <span slot="noResult">Không tìm thấy</span>
+                                <span slot="noResult">Không có kết quả</span>
                             </multiselect>
-                            <label v-if="form.$errors.has('parent_id')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.parent_id[0]}}</label>
+                            <label v-if="form.$errors.has('category_id')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.category_id[0]}}</label>
                         </div>
                     </div>
-
+                    <div class="form-group" :class="{'has-error': form.$errors.has('thumbnail')}">
+                        <label class="col-sm-2 control-label">Ảnh Đại Diện</label>
+                        <div class="col-sm-3">
+                            <div class="btn btn-default btn-file">
+                                <i class="fa fa-paperclip"></i> Chọn
+                                <input id="image" type="file" class="form-control" @change="loadImage">
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <label v-if="form.$errors.has('thumbnail')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.thumbnail[0]}}</label>
+                            <img :src="form.$fields.thumbnail" v-else id="imageLoad" class="img img-responsive img-thumbnail" @load="updateThumbnail"/>
+                            <input id="ImageBase64" type="hidden" value="" v-model="form.$fields.thumbnail" />
+                        </div>
+                    </div>
+                    <div class="form-group" :class="{'has-error': form.$errors.has('intro')}">
+                        <label class="col-sm-2 control-label">Giới thiệu *</label>
+                        <div class="col-sm-8">
+                            <textarea v-model="form.$fields.intro" class="form-control"></textarea>
+                            <label v-if="form.$errors.has('intro')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.intro[0]}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group" :class="{'has-error': form.$errors.has('tags')}">
+                        <label class="col-sm-2 control-label">Tags</label>
+                        <div class="col-sm-8">
+                            <multiselect :options="tags"
+                                         :value="form.$fields.tags"
+                                         :multiple="true"
+                                         :searchable="searchable"
+                                         :taggable="true"
+                                         @tag="addTag"
+                                         @update="updateSelectedTagging"
+                                         @search-change="findTags"
+                                         track-by="id"
+                                         label="name"
+                                         selectedLabel="đã chọn"
+                                         tag-placeholder="thêm"
+                                         placeholder="Nhập tag"
+                                         selectLabel="Nhấn enter để chọn"
+                                         deselectLabel = "bỏ chọn"
+                                         @input="updateTags">
+                                <span slot="noResult">Không tìm thấy</span>
+                            </multiselect>
+                            <label v-if="form.$errors.has('tags')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.tags[0]}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group" :class="{'has-error': form.$errors.has('content')}">
+                        <label class="col-sm-2 control-label">Nội dung *</label>
+                        <div class="col-sm-8">
+                            <textarea v-model="form.$fields.content" class="form-control"></textarea>
+                            <label v-if="form.$errors.has('content')" class="control-label"><i class="fa fa-times-circle-o"></i> {{form.$errors.$errors.content[0]}}</label>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-8">
@@ -65,16 +114,22 @@
         data : function () {
             return {
                 form : this.$form({
-                    id: null,
-                    name: '',
-                    parent_id: {
-                        id: 0,
-                        name: 'không có',
-                        parent_id: null,
+                    title: '',
+                    intro: '',
+                    content: '',
+                    thumbnail: null,
+                    tags: [],
+                    description: '',
+                    category: {
+                        id: null,
+                        name: 'không có'
                     },
+                    category_id: null,
                 }),
-                parentCategory: [],
+                categories: [],
+                tags: [],
                 isLoading: false,
+                content: '',
             };
         },
         components: {
@@ -133,7 +188,7 @@
                         {
                             console.log('empty')
                         }else{
-                            this.parentCategory = response.body;
+                            this.categories = response.body.data;
                         }
                         this.isLoading = false;
                     }, function (response) {
@@ -142,8 +197,58 @@
                 }
             },
             updateCategory: function (newValue) {
-                this.form.$fields.parent_id = newValue;
-            }
+                this.form.$fields.category = newValue;
+                this.form.$fields.category_id = newValue.id;
+                if (newValue === null)
+                    this.form.$fields.category_id = null;
+            },
+            findTags: function (query) {
+                if (query.length !== 0) {
+                    this.$http.get('api/search/tag/' + query).then(function (response) {
+                        if (response.body === [])
+                        {
+                            console.log('empty')
+                        }else{
+                            this.tags = response.body.data;
+                        }
+                    }, function (response) {
+                    });
+                }
+            },
+            updateTags: function (newValue) {
+                this.form.$fields.tags = newValue;
+            },
+            updateSelectedTagging: function (value) {
+                this.form.$fields.tags.push(value);
+            },
+            addTag: function (newTag) {
+                const tag = {name: newTag};
+                if (this.tags.indexOf(newTag) > -1){
+                    window.alert();
+                    return;
+                }
+                this.tags.push(tag);
+                this.form.$fields.tags.push(tag);
+            },
+            loadImage : function(){
+                var input = document.getElementById('image');
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        document.getElementById('imageLoad').setAttribute('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+
+                }
+
+                this.form.$fields.thumbnail = document.getElementById('ImageBase64').getAttribute('value');
+
+            },
+            updateThumbnail : function () {
+                this.form.$fields.thumbnail = document.getElementById('imageLoad').src;
+            },
         }
     }
 </script>

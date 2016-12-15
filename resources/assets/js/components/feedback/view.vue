@@ -7,7 +7,7 @@
                 <div class="col-xs-12">
                     <h2 class="page-header">
                         <!---->
-                        Chi tiết thể loại #{{ getId(form.id) }}
+                        Chi tiết phản hồi #{{ getId(form.id) }}
                         <div class="pull-right">
                             <i class="fa fa-globe"></i> Huybui.blog
                         </div>
@@ -25,9 +25,21 @@
                         <dt>Tên</dt>
                         <dd>{{ form.name }}</dd>
 
-                        <dt v-if="form.parent">Thể loại cha</dt>
-                        <dd v-if="form.parent">{{ form.parent.name }}</dd>
+                        <dt>Email</dt>
+                        <dd>{{ form.email }}</dd>
 
+                        <dt v-if="form.phone">Điện thoại</dt>
+                        <dd v-if="form.phone">{{ form.phone }}</dd>
+
+                        <dt v-if="form.address">Địa chỉ</dt>
+                        <dd v-if="form.address">{{ form.address }}</dd>
+
+                    </dl>
+                </div>
+                <div class="col-sm-4">
+                    <dl class="dl-horizontal">
+                        <dt>Lời nhắn</dt>
+                        <dd>{{ form.message }}</dd>
                     </dl>
                 </div>
             </div>
@@ -36,7 +48,6 @@
             <div class="row no-print">
                 <div class="col-xs-12">
                     <router-link :to="{ name: 'list' }" class="btn btn-default"><i class="fa fa-mail-reply"></i> Quay Lại</router-link>
-                    <button @click="updateMe" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <button @click="deleteMe" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                 </div>
             </div>
@@ -85,9 +96,6 @@
                     this.notify('Error', 'danger', '');
                     this.$Progress.fail();
                 });
-            },
-            updateMe : function () {
-                this.$router.push({ name: 'update', params : { id : this.$route.params.id}})
             },
         },
     }
